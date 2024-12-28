@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'maven-publish'
 
 ext {
     bintrayRepo = 'Maven-for-Android'
@@ -15,7 +16,7 @@ ext {
     siteUrl = 'https://github.com/theblitz/ObservableCollections'
     gitUrl = 'https://github.com/theblitz/ObservableCollections.git'
 
-    libraryVersion = '1.4.2'
+    libraryVersion = '1.4.2.1'
 
     developerId = 'theblitz'
     developerName = 'Jonathan Blitz'
@@ -26,6 +27,31 @@ ext {
     allLicenses = ["Apache-2.0"]
 }
 
+afterEvaluate {
+    publishing {
+        publications {
+            release(MavenPublication) {
+                from(components["release"])
+                groupId = "il.co.theblitz"
+                artifactId = "observablecollections"
+                version = libraryVersion
+            }
+
+        }
+
+        repositories {
+            maven {
+                name "github-packages"
+                credentials {
+                    username "${github_packages_user}"
+                    password "${github_packages_token}"
+                }
+                url "https://maven.pkg.github.com/neboskreb/irriga"
+            }
+        }
+    }
+}
+
 android {
     namespace 'il.co.theblitz.observablecollections'
 
@@ -33,7 +59,7 @@ android {
         compileSdk 30
         minSdkVersion 19
         versionCode 0
-        versionName "1.4.2"
+        versionName = libraryVersion
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -53,6 +79,13 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
+    }
+
+    publishing {
+        singleVariant("release") {
+            withJavadocJar()
+            withSourcesJar()
+        }
     }
 }
 
