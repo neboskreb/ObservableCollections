@@ -41,7 +41,7 @@ class ObservableLinkedList<X>(skipCurrentValueCall: Boolean = false): Observable
         return collection!!.toArray()
     }
 
-    fun <T : Any?> toArray(a: Array<out T>?): Array<T> {
+    fun <T : Any?> toArray(a: Array<out T>): Array<T> {
         return collection!!.toArray(a)
     }
 

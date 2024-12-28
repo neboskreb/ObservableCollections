@@ -63,7 +63,7 @@ class ObservableVector<X>(skipCurrentValueCall: Boolean = false): Serializable, 
         return collection!!.toArray()
     }
 
-    fun <T : Any?> toArray(a: Array<out T>?): Array<T> {
+    fun <T : Any?> toArray(a: Array<out T>): Array<T> {
         return collection!!.toArray(a)
     }
 
@@ -85,7 +85,7 @@ class ObservableVector<X>(skipCurrentValueCall: Boolean = false): Serializable, 
         collection!!.setSize(newSize)
     }
 
-    fun copyInto(anArray: Array<out Any>?) {
+    fun copyInto(anArray: Array<out Any>) {
         collection!!.copyInto(anArray)
     }
 
