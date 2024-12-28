@@ -28,7 +28,7 @@ open class ObservableVector<X> : Serializable, ObservableList<X, Vector<X>> {
     }
 
 
-    fun addAll(index: Int, elements: Collection<X>): Boolean {
+    override fun addAll(index: Int, elements: Collection<X>): Boolean {
         val added = collection.addAll(index, elements)
         if (added)
             signalChanged(ObservableCollectionsAction.AddAll, actionInt = index, actionElements = elements, resultBoolean = added)
