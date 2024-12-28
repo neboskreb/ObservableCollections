@@ -94,13 +94,13 @@ abstract class ObservableCollection<X, T: MutableCollection<X>> : Serializable, 
 
     @TargetApi(24)
     @RequiresApi(24)
-    fun parallelStream(): Stream<X> {
+    open fun parallelStream(): Stream<X> {
         return collection.parallelStream()
     }
 
     @TargetApi(24)
     @RequiresApi(24)
-    fun removeIf(filter: Predicate<in X>): Boolean {
+    open fun removeIf(filter: Predicate<in X>): Boolean {
         val removedElements: ObservableCollection<X, T> = clone()
         val removed = collection.removeIf(filter)
         removedElements.removeAll(collection)
@@ -109,15 +109,17 @@ abstract class ObservableCollection<X, T: MutableCollection<X>> : Serializable, 
         return removed
     }
 
+    // TODO Make abstract to avoid unintended "diamond" inheritance
     @TargetApi(24)
     @RequiresApi(24)
-    fun spliterator(): Spliterator<X> {
+    open fun spliterator(): Spliterator<X> {
         return collection.spliterator()
     }
 
+    // TODO Make abstract to avoid unintended "diamond" inheritance
     @TargetApi(24)
     @RequiresApi(24)
-    fun stream(): Stream<X> {
+    open fun stream(): Stream<X> {
         return collection.stream()
     }
 

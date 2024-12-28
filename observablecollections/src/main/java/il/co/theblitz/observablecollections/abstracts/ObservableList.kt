@@ -1,24 +1,27 @@
 package il.co.theblitz.observablecollections.abstracts
 
+import android.annotation.TargetApi
+import androidx.annotation.RequiresApi
 import il.co.theblitz.observablecollections.enums.ObservableCollectionsAction
 import java.io.Serializable
 import java.util.*
+import java.util.stream.Stream
 import kotlin.random.Random
 
 @Suppress("unused", "ConvertSecondaryConstructorToPrimary")
-abstract class ObservableList<X, T: MutableList<X>> : Serializable, ObservableCollection<X, T> {
+abstract class ObservableList<X, T: MutableList<X>> : Serializable, ObservableCollection<X, T>, MutableList<X> {
 
     constructor(factory: () -> T, skipCurrentValue: Boolean = false) : super(factory, skipCurrentValue)
 
     override val collection: T
         get() = _collection
 
-    fun add(index: Int, element: X) {
+    override fun add(index: Int, element: X) {
         collection.add(index, element)
         signalChanged(ObservableCollectionsAction.Add, actionInt = index, actionElement = element)
     }
 
-    operator fun get(index: Int): X {
+    override operator fun get(index: Int): X {
         return collection[index]
     }
 
@@ -30,11 +33,11 @@ abstract class ObservableList<X, T: MutableList<X>> : Serializable, ObservableCo
         return collection.getOrElse(index, defaultValue)
     }
 
-    fun indexOf(element: X): Int {
+    override fun indexOf(element: X): Int {
         return collection.indexOf(element)
     }
 
-    fun lastIndexOf(element: X): Int {
+    override fun lastIndexOf(element: X): Int {
         return collection.lastIndexOf(element)
     }
 
@@ -46,20 +49,20 @@ abstract class ObservableList<X, T: MutableList<X>> : Serializable, ObservableCo
         return collection.indexOfLast(predicate)
     }
 
-    fun listIterator(): ListIterator<X> {
+    override fun listIterator(): MutableListIterator<X> {
         return collection.listIterator()
     }
 
-    fun listIterator(index: Int): ListIterator<X> {
+    override fun listIterator(index: Int): MutableListIterator<X> {
         return collection.listIterator(index)
     }
 
-    fun subList(fromIndex: Int, toIndex: Int): List<X> {
+    override fun subList(fromIndex: Int, toIndex: Int): MutableList<X> {
         return collection.subList(fromIndex, toIndex)
     }
 
 
-    fun removeAt(index: Int): X {
+    override fun removeAt(index: Int): X {
         val resultElement = collection.removeAt(index)
         signalChanged(ObservableCollectionsAction.RemoveAt, actionInt = index, resultElement = resultElement)
         return resultElement
@@ -70,7 +73,7 @@ abstract class ObservableList<X, T: MutableList<X>> : Serializable, ObservableCo
         signalChanged(ObservableCollectionsAction.Fill, actionElement = value)
     }
 
-    operator fun set(index: Int, element: X): X {
+    override operator fun set(index: Int, element: X): X {
         val resultElement = collection.set(index, element)
         signalChanged(ObservableCollectionsAction.Set, actionInt = index, actionElement = element, resultElement = resultElement)
         return resultElement
@@ -90,4 +93,18 @@ abstract class ObservableList<X, T: MutableList<X>> : Serializable, ObservableCo
         collection.sortWith(comparator)
         signalChanged(ObservableCollectionsAction.Sort)
     }
+
+
+    @TargetApi(24)
+    @RequiresApi(24)
+    override fun spliterator(): Spliterator<X> {
+        return collection.spliterator()
+    }
+
+    @TargetApi(24)
+    @RequiresApi(24)
+    override fun stream(): Stream<X> {
+        return collection.stream()
+    }
 }
+
