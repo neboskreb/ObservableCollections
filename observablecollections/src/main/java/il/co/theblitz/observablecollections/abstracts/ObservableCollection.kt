@@ -95,15 +95,15 @@ abstract class ObservableCollection<X, T: MutableCollection<X>> : Serializable, 
     @TargetApi(24)
     @RequiresApi(24)
     fun parallelStream(): Stream<X> {
-        return collection!!.parallelStream()
+        return collection.parallelStream()
     }
 
     @TargetApi(24)
     @RequiresApi(24)
     fun removeIf(filter: Predicate<in X>): Boolean {
         val removedElements: ObservableCollection<X, T> = clone()
-        val removed = collection!!.removeIf(filter)
-        removedElements.removeAll(collection!!)
+        val removed = collection.removeIf(filter)
+        removedElements.removeAll(collection)
         if (removed)
             signalChanged(action = ObservableCollectionsAction.RemoveIf, removedElements = removedElements.collection, resultBoolean = removed)
         return removed
@@ -112,45 +112,45 @@ abstract class ObservableCollection<X, T: MutableCollection<X>> : Serializable, 
     @TargetApi(24)
     @RequiresApi(24)
     fun spliterator(): Spliterator<X> {
-        return collection!!.spliterator()
+        return collection.spliterator()
     }
 
     @TargetApi(24)
     @RequiresApi(24)
     fun stream(): Stream<X> {
-        return collection!!.stream()
+        return collection.stream()
     }
 
     val size: Int
-        get() = collection!!.size
+        get() = collection.size
 
     fun contains(element: X): Boolean {
-        return collection!!.contains(element)
+        return collection.contains(element)
     }
 
     fun containsAll(elements: Collection<X>): Boolean {
-        return collection!!.containsAll(elements)
+        return collection.containsAll(elements)
     }
 
     fun isEmpty(): Boolean {
-        return collection!!.isEmpty()
+        return collection.isEmpty()
     }
 
     fun isNotEmpty(): Boolean {
-        return collection!!.isNotEmpty()
+        return collection.isNotEmpty()
     }
 
     fun add(element: X): Boolean {
-        val size = collection!!.size
-        val added = collection!!.add(element)
+        val size = collection.size
+        val added = collection.add(element)
         if (added)
             signalChanged(action = ObservableCollectionsAction.Add, actionInt = size, actionElement = element, resultBoolean = added)
         return added
     }
 
     fun addAll(elements: Collection<X>): Boolean {
-        val size = collection!!.size
-        val added = collection!!.addAll(elements)
+        val size = collection.size
+        val added = collection.addAll(elements)
         if (added)
             signalChanged(action = ObservableCollectionsAction.AddAll, actionInt = size, actionElements = elements, resultBoolean = added)
         return added
@@ -161,30 +161,30 @@ abstract class ObservableCollection<X, T: MutableCollection<X>> : Serializable, 
     }
 
     fun clear() {
-        collection!!.clear()
+        collection.clear()
         signalChanged(action = ObservableCollectionsAction.Clear)
     }
 
     override fun iterator(): MutableIterator<X> {
-        return collection!!.iterator()
+        return collection.iterator()
     }
 
     fun remove(element: X): Boolean {
-        val removed = collection!!.remove(element)
+        val removed = collection.remove(element)
         if (removed)
             signalChanged(action = ObservableCollectionsAction.Remove, actionElement = element, resultBoolean = removed)
         return removed
     }
 
     fun removeAll(elements: Collection<X>): Boolean {
-        val removed = collection!!.removeAll(elements)
+        val removed = collection.removeAll(elements)
         if (removed)
             signalChanged(action = ObservableCollectionsAction.RemoveAll, actionElements = elements, resultBoolean = removed)
         return removed
     }
 
     fun removeAll(elements: ObservableCollection<X, T>): Boolean {
-        val removed = collection!!.removeAll(elements.collection as MutableCollection<X>)
+        val removed = collection.removeAll(elements.collection as MutableCollection<X>)
         if (removed)
             signalChanged(action = ObservableCollectionsAction.RemoveAll, actionElements = elements.collection, resultBoolean = removed)
         return removed
@@ -193,7 +193,7 @@ abstract class ObservableCollection<X, T: MutableCollection<X>> : Serializable, 
     fun retainAll(elements: Collection<X>): Boolean {
         val removedElements: ObservableCollection<X, T> = clone()
         removedElements.removeAll(elements)
-        val changed = collection!!.retainAll(elements)
+        val changed = collection.retainAll(elements)
         if (changed)
             signalChanged(action = ObservableCollectionsAction.RetainAll, actionElements = elements, removedElements = removedElements.collection, resultBoolean = changed)
         return changed
@@ -209,7 +209,7 @@ abstract class ObservableCollection<X, T: MutableCollection<X>> : Serializable, 
      */
     fun sortedWith(comparator: Comparator<in X>): ObservableList<X, ArrayList<X>> {
         val list = ObservableArrayList<X>()
-        list.addAll(collection!!.sortedWith(comparator))
+        list.addAll(collection.sortedWith(comparator))
 
         return list
     }
@@ -220,7 +220,7 @@ abstract class ObservableCollection<X, T: MutableCollection<X>> : Serializable, 
      */
     fun shuffled(random: Random): ObservableList<X, ArrayList<X>> {
         val list = ObservableArrayList<X>()
-        list.addAll(collection!!.shuffled(random))
+        list.addAll(collection.shuffled(random))
 
         return list
     }
@@ -231,7 +231,7 @@ abstract class ObservableCollection<X, T: MutableCollection<X>> : Serializable, 
      */
     fun reversed(): ObservableList<X, ArrayList<X>> {
         val list = ObservableArrayList<X>()
-        list.addAll(collection!!.reversed())
+        list.addAll(collection.reversed())
 
         return list
     }

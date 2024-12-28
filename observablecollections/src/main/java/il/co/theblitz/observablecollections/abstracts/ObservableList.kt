@@ -14,80 +14,80 @@ abstract class ObservableList<X, T: MutableList<X>> : Serializable, ObservableCo
         get() = _collection
 
     fun add(index: Int, element: X) {
-        collection!!.add(index, element)
+        collection.add(index, element)
         signalChanged(ObservableCollectionsAction.Add, actionInt = index, actionElement = element)
     }
 
     operator fun get(index: Int): X {
-        return collection!![index]
+        return collection[index]
     }
 
     fun getOrNull(index: Int): X? {
-        return collection!!.getOrNull(index)
+        return collection.getOrNull(index)
     }
 
     fun getOrElse(index: Int, defaultValue: (Int) -> X): X {
-        return collection!!.getOrElse(index, defaultValue)
+        return collection.getOrElse(index, defaultValue)
     }
 
     fun indexOf(element: X): Int {
-        return collection!!.indexOf(element)
+        return collection.indexOf(element)
     }
 
     fun lastIndexOf(element: X): Int {
-        return collection!!.lastIndexOf(element)
+        return collection.lastIndexOf(element)
     }
 
     fun indexOfFirst(predicate: (X) -> Boolean): Int {
-        return collection!!.indexOfFirst(predicate)
+        return collection.indexOfFirst(predicate)
     }
 
     fun indexOfLast(predicate: (X) -> Boolean): Int {
-        return collection!!.indexOfLast(predicate)
+        return collection.indexOfLast(predicate)
     }
 
     fun listIterator(): ListIterator<X> {
-        return collection!!.listIterator()
+        return collection.listIterator()
     }
 
     fun listIterator(index: Int): ListIterator<X> {
-        return collection!!.listIterator(index)
+        return collection.listIterator(index)
     }
 
     fun subList(fromIndex: Int, toIndex: Int): List<X> {
-        return collection!!.subList(fromIndex, toIndex)
+        return collection.subList(fromIndex, toIndex)
     }
 
 
     fun removeAt(index: Int): X {
-        val resultElement = collection!!.removeAt(index)
+        val resultElement = collection.removeAt(index)
         signalChanged(ObservableCollectionsAction.RemoveAt, actionInt = index, resultElement = resultElement)
         return resultElement
     }
 
     fun fill(value: X) {
-        collection!!.fill(value)
+        collection.fill(value)
         signalChanged(ObservableCollectionsAction.Fill, actionElement = value)
     }
 
     operator fun set(index: Int, element: X): X {
-        val resultElement = collection!!.set(index, element)
+        val resultElement = collection.set(index, element)
         signalChanged(ObservableCollectionsAction.Set, actionInt = index, actionElement = element, resultElement = resultElement)
         return resultElement
     }
 
     fun reverse() {
-        collection!!.reverse()
+        collection.reverse()
         signalChanged(ObservableCollectionsAction.Reverse)
     }
 
     fun shuffle(random: Random) {
-        collection!!.shuffle(random)
+        collection.shuffle(random)
         signalChanged(ObservableCollectionsAction.Shuffle)
     }
 
     fun sortWith(comparator: Comparator<in X>) {
-        collection!!.sortWith(comparator)
+        collection.sortWith(comparator)
         signalChanged(ObservableCollectionsAction.Sort)
     }
 }

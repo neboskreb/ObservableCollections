@@ -19,101 +19,101 @@ class ObservableVector<X> : Serializable, ObservableList<X, Vector<X>> {
 
 
     fun indexOf(o: Any?, index: Int): Int {
-        return collection!!.indexOf(o, index)
+        return collection.indexOf(o, index)
     }
 
     fun lastIndexOf(o: Any?, index: Int): Int {
-        return collection!!.lastIndexOf(o, index)
+        return collection.lastIndexOf(o, index)
     }
 
 
     fun addAll(index: Int, elements: Collection<X>): Boolean {
-        val added = collection!!.addAll(index, elements)
+        val added = collection.addAll(index, elements)
         if (added)
             signalChanged(ObservableCollectionsAction.AddAll, actionInt = index, actionElements = elements, resultBoolean = added)
         return added
     }
 
     fun elementAt(index: Int): X {
-        return collection!!.elementAt(index)
+        return collection.elementAt(index)
     }
 
     @TargetApi(24)
     fun replaceAll(operator: UnaryOperator<X>) {
-        collection!!.replaceAll(operator)
+        collection.replaceAll(operator)
         signalChanged(ObservableCollectionsAction.ReplaceAll)
     }
 
     fun lastElement(): X {
-        return collection!!.lastElement()
+        return collection.lastElement()
     }
 
     fun firstElement(): X {
-        return collection!!.firstElement()
+        return collection.firstElement()
     }
 
     fun trimToSize() {
-        collection!!.trimToSize()
+        collection.trimToSize()
     }
 
     fun removeElement(obj: X): Boolean {
-        val removed = collection!!.removeElement(obj)
+        val removed = collection.removeElement(obj)
         if (removed)
             signalChanged(ObservableCollectionsAction.RemoveAt, actionElement = obj, resultBoolean = removed)
         return removed
     }
 
     fun toArray(): Array<Any> {
-        return collection!!.toArray()
+        return collection.toArray()
     }
 
     fun <T : Any?> toArray(a: Array<out T>): Array<T> {
-        return collection!!.toArray(a)
+        return collection.toArray(a)
     }
 
     fun capacity(): Int {
-        return collection!!.capacity()
+        return collection.capacity()
     }
 
     fun setElementAt(obj: X, index: Int) {
-        collection!!.setElementAt(obj, index)
+        collection.setElementAt(obj, index)
         signalChanged(ObservableCollectionsAction.SetElementAt, actionInt = index, actionElement = obj)
     }
 
     fun addElement(obj: X) {
-        collection!!.addElement(obj)
+        collection.addElement(obj)
         signalChanged(ObservableCollectionsAction.AddElement, actionElement = obj)
     }
 
     fun setSize(newSize: Int) {
-        collection!!.setSize(newSize)
+        collection.setSize(newSize)
     }
 
     fun copyInto(anArray: Array<out Any>) {
-        collection!!.copyInto(anArray)
+        collection.copyInto(anArray)
     }
 
     fun removeAllElements() {
-        collection!!.removeAllElements()
+        collection.removeAllElements()
         signalChanged(action = ObservableCollectionsAction.RemoveAll)
     }
 
     fun ensureCapacity(minCapacity: Int) {
-        collection!!.ensureCapacity(minCapacity)
+        collection.ensureCapacity(minCapacity)
     }
 
     fun removeElementAt(index: Int) {
-        collection!!.removeElementAt(index)
+        collection.removeElementAt(index)
         signalChanged(action = ObservableCollectionsAction.RemoveElementAt, actionInt = index)
     }
 
     fun insertElementAt(obj: X, index: Int) {
-        collection!!.insertElementAt(obj, index)
+        collection.insertElementAt(obj, index)
         signalChanged(action = ObservableCollectionsAction.InsertElementAt, actionInt = index, actionElement = obj)
     }
 
     fun elements(): Enumeration<X> {
-        return collection!!.elements()
+        return collection.elements()
     }
 
 }
