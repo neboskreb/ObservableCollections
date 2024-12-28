@@ -14,7 +14,7 @@ import java.util.stream.Stream
 import kotlin.collections.ArrayList
 import kotlin.random.Random
 
-@Suppress("unused")
+@Suppress("unused", "ConvertSecondaryConstructorToPrimary")
 abstract class ObservableCollection<X, T: MutableCollection<X>> : Serializable, MutableLiveData<ObservableCollection<X, T>>, MutableIterable<X>, Cloneable, Iterable<X>{
 
     private val skipCurrentValueCall: Boolean

@@ -4,6 +4,7 @@ import il.co.theblitz.observablecollections.abstracts.ObservableCollection
 import il.co.theblitz.observablecollections.enums.ObservableCollectionsAction
 import java.util.*
 
+@Suppress("unused", "ConvertSecondaryConstructorToPrimary")
 abstract class ObservableQueue<X, T: Queue<X>> : ObservableCollection<X, T> {
 
     constructor(factory: () -> T, skipCurrentValueCall: Boolean = false) : super(factory, skipCurrentValueCall)

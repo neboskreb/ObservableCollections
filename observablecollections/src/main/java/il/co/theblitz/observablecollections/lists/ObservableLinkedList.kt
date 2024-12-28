@@ -6,6 +6,7 @@ import java.io.Serializable
 import java.util.LinkedList
 
 
+@Suppress("unused")
 open class ObservableLinkedList<X> : ObservableDeque<X, LinkedList<X>>, Serializable{
 
     constructor(factory: () -> LinkedList<X> = { LinkedList() }, skipCurrentValue: Boolean = false) : super(factory, skipCurrentValue)

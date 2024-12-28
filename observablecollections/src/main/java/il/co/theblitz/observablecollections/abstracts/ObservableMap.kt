@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import il.co.theblitz.observablecollections.enums.ObservableCollectionsAction
 
+@Suppress("unused", "ConvertSecondaryConstructorToPrimary")
  abstract class ObservableMap<X, Y, T : MutableMap<X, Y>> : MutableLiveData<ObservableMap<X, Y, T>>, Iterable<Map.Entry<X, Y>>{
 
      val skipCurrentValueCall: Boolean
