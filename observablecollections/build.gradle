@@ -27,10 +27,11 @@ ext {
 }
 
 android {
-    compileSdkVersion 30
-     defaultConfig {
+    namespace 'il.co.theblitz.observablecollections'
+
+    defaultConfig {
+        compileSdk 30
         minSdkVersion 19
-        targetSdkVersion 30
         versionCode 0
         versionName "1.4.2"
 
