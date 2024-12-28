@@ -20,7 +20,7 @@ class ObservableArrayList<X> : ObservableList<X, ArrayList<X>>, RandomAccess, Se
 
 
     fun addAll(index: Int, elements: Collection<X>): Boolean {
-        val added = collection!!.addAll(index, elements)
+        val added = collection.addAll(index, elements)
         if (added)
             signalChanged(ObservableCollectionsAction.AddAll, actionInt = index, actionElements = elements, resultBoolean = added)
         return added
@@ -29,23 +29,23 @@ class ObservableArrayList<X> : ObservableList<X, ArrayList<X>>, RandomAccess, Se
     @TargetApi (24)
     @RequiresApi(24)
     fun replaceAll(operator: UnaryOperator<X>) {
-        collection!!.replaceAll(operator)
+        collection.replaceAll(operator)
         signalChanged(ObservableCollectionsAction.ReplaceAll)
     }
 
     fun trimToSize() {
-        collection!!.trimToSize()
+        collection.trimToSize()
     }
 
     fun toArray(): Array<Any> {
-        return collection!!.toArray()
+        return collection.toArray()
     }
 
     fun <T : Any?> toArray(a: Array<T>): Array<T> {
-        return collection!!.toArray(a)
+        return collection.toArray(a)
     }
 
     fun ensureCapacity(minCapacity: Int) {
-        collection!!.ensureCapacity(minCapacity)
+        collection.ensureCapacity(minCapacity)
     }
 }

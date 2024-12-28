@@ -54,47 +54,47 @@ import il.co.theblitz.observablecollections.enums.ObservableCollectionsAction
     }
 
     val size: Int
-        get() = map!!.size
+        get() = map.size
 
     fun isEmpty(): Boolean {
-        return map!!.isEmpty()
+        return map.isEmpty()
     }
 
     fun clear() {
-        map!!.clear()
+        map.clear()
         signalChanged(action = ObservableCollectionsAction.Clear)
     }
 
     fun remove(key: X): Y? {
-        val value = map!!.remove(key)
+        val value = map.remove(key)
         if (value != null)
             signalChanged(action = ObservableCollectionsAction.Remove, actionKey = key, resultValue = value)
         return value
     }
 
     fun containsKey(key: X): Boolean {
-        return map!!.containsKey(key)
+        return map.containsKey(key)
     }
 
     fun containsValue(value: Y): Boolean {
-        return map!!.containsValue(value)
+        return map.containsValue(value)
     }
 
     operator fun get(key: X): Y? {
-        return map!!.get(key)
+        return map.get(key)
     }
 
     val entries: MutableSet<MutableMap.MutableEntry<X, Y>>
-        get() = map!!.entries
+        get() = map.entries
 
     val keys: MutableSet<X>
-        get() = map!!.keys
+        get() = map.keys
 
     val values: MutableCollection<Y>
-        get() = map!!.values
+        get() = map.values
 
     fun put(key: X, value: Y): Y? {
-        val resultValue = map!!.put(key, value)
+        val resultValue = map.put(key, value)
         signalChanged(action = ObservableCollectionsAction.Put, actionKey = key, actionValue = value, resultValue = resultValue)
         return resultValue
     }
@@ -104,12 +104,12 @@ import il.co.theblitz.observablecollections.enums.ObservableCollectionsAction
     }
 
     fun putAll(from: Map<out X, Y>) {
-        map!!.putAll(from)
+        map.putAll(from)
         signalChanged(action = ObservableCollectionsAction.PutAll, actionMap = from)
 
     }
 
      override fun iterator(): Iterator<Map.Entry<X, Y>> {
-         return map!!.iterator()
+         return map.iterator()
      }
  }
