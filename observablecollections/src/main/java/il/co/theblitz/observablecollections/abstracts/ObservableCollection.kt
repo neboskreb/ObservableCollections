@@ -15,7 +15,7 @@ import kotlin.collections.ArrayList
 import kotlin.random.Random
 
 @Suppress("unused", "ConvertSecondaryConstructorToPrimary")
-abstract class ObservableCollection<X, T: MutableCollection<X>> : Serializable, MutableLiveData<ObservableCollection<X, T>>, MutableIterable<X>, Cloneable, Iterable<X>{
+abstract class ObservableCollection<X, T: MutableCollection<X>> : Serializable, MutableLiveData<ObservableCollection<X, T>>, MutableIterable<X>, Cloneable, Iterable<X>, MutableCollection<X>{
 
     private val skipCurrentValueCall: Boolean
 
@@ -121,18 +121,18 @@ abstract class ObservableCollection<X, T: MutableCollection<X>> : Serializable, 
         return collection.stream()
     }
 
-    val size: Int
+    override val size: Int
         get() = collection.size
 
-    fun contains(element: X): Boolean {
+    override fun contains(element: X): Boolean {
         return collection.contains(element)
     }
 
-    fun containsAll(elements: Collection<X>): Boolean {
+    override fun containsAll(elements: Collection<X>): Boolean {
         return collection.containsAll(elements)
     }
 
-    fun isEmpty(): Boolean {
+    override fun isEmpty(): Boolean {
         return collection.isEmpty()
     }
 
@@ -140,7 +140,7 @@ abstract class ObservableCollection<X, T: MutableCollection<X>> : Serializable, 
         return collection.isNotEmpty()
     }
 
-    fun add(element: X): Boolean {
+    override fun add(element: X): Boolean {
         val size = collection.size
         val added = collection.add(element)
         if (added)
@@ -148,19 +148,18 @@ abstract class ObservableCollection<X, T: MutableCollection<X>> : Serializable, 
         return added
     }
 
-    fun addAll(elements: Collection<X>): Boolean {
+    override fun addAll(elements: Collection<X>): Boolean {
         val size = collection.size
         val added = collection.addAll(elements)
-        if (added)
-            signalChanged(action = ObservableCollectionsAction.AddAll, actionInt = size, actionElements = elements, resultBoolean = added)
+        if (added) {
+            @Suppress("UNCHECKED_CAST")
+            val actionElements = if (elements is ObservableCollection<X, *>) elements.collection as Collection<X> else elements
+            signalChanged(action = ObservableCollectionsAction.AddAll, actionInt = size, actionElements = actionElements, resultBoolean = added)
+        }
         return added
     }
 
-    fun addAll(elements: ObservableCollection<X, T>): Boolean {
-        return addAll(elements.collection as MutableCollection<X>)
-    }
-
-    fun clear() {
+    override fun clear() {
         collection.clear()
         signalChanged(action = ObservableCollectionsAction.Clear)
     }
@@ -169,38 +168,33 @@ abstract class ObservableCollection<X, T: MutableCollection<X>> : Serializable, 
         return collection.iterator()
     }
 
-    fun remove(element: X): Boolean {
+    override fun remove(element: X): Boolean {
         val removed = collection.remove(element)
         if (removed)
             signalChanged(action = ObservableCollectionsAction.Remove, actionElement = element, resultBoolean = removed)
         return removed
     }
 
-    fun removeAll(elements: Collection<X>): Boolean {
+    override fun removeAll(elements: Collection<X>): Boolean {
         val removed = collection.removeAll(elements)
-        if (removed)
-            signalChanged(action = ObservableCollectionsAction.RemoveAll, actionElements = elements, resultBoolean = removed)
+        if (removed) {
+            @Suppress("UNCHECKED_CAST")
+            val actionElements = if (elements is ObservableCollection<X, *>) elements.collection as Collection<X> else elements
+            signalChanged(action = ObservableCollectionsAction.RemoveAll, actionElements = actionElements, resultBoolean = removed)
+        }
         return removed
     }
 
-    fun removeAll(elements: ObservableCollection<X, T>): Boolean {
-        val removed = collection.removeAll(elements.collection as MutableCollection<X>)
-        if (removed)
-            signalChanged(action = ObservableCollectionsAction.RemoveAll, actionElements = elements.collection, resultBoolean = removed)
-        return removed
-    }
-
-    fun retainAll(elements: Collection<X>): Boolean {
+    override fun retainAll(elements: Collection<X>): Boolean {
         val removedElements: ObservableCollection<X, T> = clone()
         removedElements.removeAll(elements)
         val changed = collection.retainAll(elements)
-        if (changed)
-            signalChanged(action = ObservableCollectionsAction.RetainAll, actionElements = elements, removedElements = removedElements.collection, resultBoolean = changed)
+        if (changed) {
+            @Suppress("UNCHECKED_CAST")
+            val actionElements = if (elements is ObservableCollection<X, *>) elements.collection as Collection<X> else elements
+            signalChanged(action = ObservableCollectionsAction.RetainAll, actionElements = actionElements, removedElements = removedElements.collection, resultBoolean = changed)
+        }
         return changed
-    }
-
-    fun retainAll(elements: ObservableCollection<X, T>): Boolean {
-        return retainAll(elements.collection as MutableCollection<X>)
     }
 
     /**
