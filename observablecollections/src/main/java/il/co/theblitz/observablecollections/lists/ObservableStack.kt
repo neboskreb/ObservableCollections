@@ -6,6 +6,7 @@ import il.co.theblitz.observablecollections.enums.ObservableCollectionsAction
 import java.io.Serializable
 import java.util.*
 
+@Suppress("unused", "ConvertSecondaryConstructorToPrimary")
 open class ObservableStack<X> : Serializable, ObservableList<X, Stack<X>> {
 
     constructor(factory: () -> Stack<X> = { Stack() }, skipCurrentValueCall: Boolean = false) : super(factory, skipCurrentValueCall)

@@ -5,7 +5,7 @@ import java.io.Serializable
 import java.util.*
 import kotlin.random.Random
 
-@Suppress("unused")
+@Suppress("unused", "ConvertSecondaryConstructorToPrimary")
 abstract class ObservableList<X, T: MutableList<X>> : Serializable, ObservableCollection<X, T> {
 
     constructor(factory: () -> T, skipCurrentValue: Boolean = false) : super(factory, skipCurrentValue)

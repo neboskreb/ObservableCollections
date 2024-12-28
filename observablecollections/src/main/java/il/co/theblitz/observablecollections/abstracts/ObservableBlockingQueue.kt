@@ -5,6 +5,7 @@ import il.co.theblitz.observablecollections.queues.ObservableQueue
 import java.util.concurrent.BlockingQueue
 import java.util.concurrent.TimeUnit
 
+@Suppress("unused", "ConvertSecondaryConstructorToPrimary")
 abstract class ObservableBlockingQueue<X, T: BlockingQueue<X>> : ObservableQueue<X, T> {
 
     constructor(factory: () -> T, skipCurrentValueCall: Boolean = false) : super(factory, skipCurrentValueCall)

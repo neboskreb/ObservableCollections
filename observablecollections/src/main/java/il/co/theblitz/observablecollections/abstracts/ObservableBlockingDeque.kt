@@ -4,6 +4,7 @@ import il.co.theblitz.observablecollections.enums.ObservableCollectionsAction
 import java.util.concurrent.BlockingDeque
 import java.util.concurrent.TimeUnit
 
+@Suppress("unused", "ConvertSecondaryConstructorToPrimary")
 abstract class ObservableBlockingDeque<X, T: BlockingDeque<X>> : ObservableDeque<X, T> {
 
     constructor(factory: () -> T, skipCurrentValueCall: Boolean = false) : super(factory, skipCurrentValueCall)

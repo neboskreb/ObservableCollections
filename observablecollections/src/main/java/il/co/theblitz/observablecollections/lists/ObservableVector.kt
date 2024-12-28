@@ -8,7 +8,8 @@ import java.io.Serializable
 import java.util.*
 import java.util.function.UnaryOperator
 
-class ObservableVector<X> : Serializable, ObservableList<X, Vector<X>> {
+@Suppress("unused")
+open class ObservableVector<X> : Serializable, ObservableList<X, Vector<X>> {
     constructor(factory: () -> Vector<X> = { Vector() }, skipCurrentValue: Boolean = false) : super(factory, skipCurrentValue)
 
     constructor(capacity: Int, skipCurrentValue: Boolean = false) : this({ Vector(capacity) }, skipCurrentValue)
