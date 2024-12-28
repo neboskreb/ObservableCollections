@@ -6,11 +6,12 @@ import java.util.*
 import kotlin.random.Random
 
 @Suppress("unused")
-abstract class ObservableList<X, T: MutableList<X>>(skipCurrentValue: Boolean = false): Serializable, ObservableCollection<X, T>(skipCurrentValue) {
+abstract class ObservableList<X, T: MutableList<X>> : Serializable, ObservableCollection<X, T> {
 
-    override var collection: T?
+    constructor(factory: () -> T, skipCurrentValue: Boolean = false) : super(factory, skipCurrentValue)
+
+    override val collection: T
         get() = _collection
-        set(value) {_collection = value}
 
     fun add(index: Int, element: X) {
         collection!!.add(index, element)

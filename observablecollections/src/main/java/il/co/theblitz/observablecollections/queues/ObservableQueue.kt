@@ -4,7 +4,9 @@ import il.co.theblitz.observablecollections.abstracts.ObservableCollection
 import il.co.theblitz.observablecollections.enums.ObservableCollectionsAction
 import java.util.*
 
-open class ObservableQueue<X, T: Queue<X>>(skipCurrentValueCall: Boolean = false): ObservableCollection<X, T>(skipCurrentValueCall) {
+abstract class ObservableQueue<X, T: Queue<X>> : ObservableCollection<X, T> {
+
+    constructor(factory: () -> T, skipCurrentValueCall: Boolean = false) : super(factory, skipCurrentValueCall)
 
     fun remove(): X {
         val resultElement = collection!!.remove()

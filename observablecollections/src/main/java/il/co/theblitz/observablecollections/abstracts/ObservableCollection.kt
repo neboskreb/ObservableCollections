@@ -1,7 +1,6 @@
 package il.co.theblitz.observablecollections.abstracts
 
 import android.annotation.TargetApi
-import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
@@ -16,12 +15,19 @@ import kotlin.collections.ArrayList
 import kotlin.random.Random
 
 @Suppress("unused")
-abstract class ObservableCollection<X, T: MutableCollection<X>>(private val skipCurrentValueCall: Boolean = false): Serializable, MutableLiveData<ObservableCollection<X, T>>(), MutableIterable<X>, Cloneable, Iterable<X>{
+abstract class ObservableCollection<X, T: MutableCollection<X>> : Serializable, MutableLiveData<ObservableCollection<X, T>>, MutableIterable<X>, Cloneable, Iterable<X>{
 
-    protected var _collection: T? = null
-    protected open var collection: T?
+    private val skipCurrentValueCall: Boolean
+
+    protected val _collection: T
+
+    protected open val collection: T
         get() = _collection
-        set(value) {_collection = value}
+
+    constructor(factory: () -> T, skipCurrentValueCall: Boolean = false) : super() {
+        this.skipCurrentValueCall = skipCurrentValueCall
+        this._collection = factory.invoke()
+    }
 
     protected open fun newInstance(): ObservableCollection<X, T> =  this::class.java.newInstance()
 

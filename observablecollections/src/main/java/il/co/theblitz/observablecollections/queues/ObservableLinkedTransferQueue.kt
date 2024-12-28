@@ -3,18 +3,13 @@ package il.co.theblitz.observablecollections.queues
 import android.annotation.TargetApi
 import il.co.theblitz.observablecollections.abstracts.ObservableTransferQueue
 import java.io.Serializable
-import java.util.*
 import java.util.concurrent.LinkedTransferQueue
 
 @TargetApi (21)
-open class ObservableLinkedTransferQueue<X>(skipCurrentValueCall: Boolean = false): ObservableTransferQueue<X, LinkedTransferQueue<X>>(skipCurrentValueCall), Serializable {
+open class ObservableLinkedTransferQueue<X> : ObservableTransferQueue<X, LinkedTransferQueue<X>>, Serializable {
 
-    init {
-        collection = LinkedTransferQueue<X>()
-    }
+    constructor(factory: () -> LinkedTransferQueue<X> = { LinkedTransferQueue() }, skipCurrentValueCall: Boolean = false) : super(factory, skipCurrentValueCall)
 
-    constructor(inCollection: MutableCollection<X>): this() {
-        collection = LinkedTransferQueue<X>(inCollection)
-    }
+    constructor(inCollection: MutableCollection<X>, skipCurrentValueCall: Boolean = false): super({ LinkedTransferQueue<X>(inCollection) }, skipCurrentValueCall)
 
 }

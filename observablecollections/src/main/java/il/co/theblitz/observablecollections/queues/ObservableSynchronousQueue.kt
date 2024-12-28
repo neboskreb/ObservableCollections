@@ -2,17 +2,12 @@ package il.co.theblitz.observablecollections.queues
 
 import il.co.theblitz.observablecollections.abstracts.ObservableBlockingQueue
 import java.io.Serializable
-import java.util.*
 import java.util.concurrent.SynchronousQueue
 
-open class ObservableSynchronousQueue<X>(fair: Boolean = false, skipCurrentValueCall: Boolean = false): ObservableBlockingQueue<X, SynchronousQueue<X>>(skipCurrentValueCall), Serializable {
+open class ObservableSynchronousQueue<X> : ObservableBlockingQueue<X, SynchronousQueue<X>>, Serializable {
 
-    init {
-        collection = SynchronousQueue<X>()
-    }
+    constructor(factory: () -> SynchronousQueue<X> = { SynchronousQueue() }, skipCurrentValueCall: Boolean = false) : super(factory, skipCurrentValueCall)
 
-    constructor(fair: Boolean): this(fair, false) {
-        collection = SynchronousQueue<X>(fair)
-    }
+    constructor(fair: Boolean = false, skipCurrentValueCall: Boolean = false): this({ SynchronousQueue<X>(fair) }, skipCurrentValueCall)
 
 }

@@ -6,11 +6,9 @@ import il.co.theblitz.observablecollections.enums.ObservableCollectionsAction
 import java.io.Serializable
 import java.util.*
 
-open class ObservableStack<X>(skipCurrentValueCall: Boolean = false): Serializable, ObservableList<X, Stack<X>>(skipCurrentValueCall) {
+open class ObservableStack<X> : Serializable, ObservableList<X, Stack<X>> {
 
-    init {
-        collection = Stack<X>()
-    }
+    constructor(factory: () -> Stack<X> = { Stack() }, skipCurrentValueCall: Boolean = false) : super(factory, skipCurrentValueCall)
 
     fun search(o: Any?): Int {
         return collection!!.search(o)
