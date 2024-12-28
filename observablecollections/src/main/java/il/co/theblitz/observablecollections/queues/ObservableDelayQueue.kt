@@ -6,14 +6,10 @@ import java.util.*
 import java.util.concurrent.DelayQueue
 import java.util.concurrent.Delayed
 
-open class ObservableDelayQueue<X: Delayed>(skipCurrentValueCall: Boolean = false): ObservableBlockingQueue<X, DelayQueue<X>>(skipCurrentValueCall), Serializable {
+open class ObservableDelayQueue<X: Delayed> : ObservableBlockingQueue<X, DelayQueue<X>>, Serializable {
 
-    init {
-        collection = DelayQueue<X>()
-    }
+    constructor(factory: () -> DelayQueue<X> = { DelayQueue() }, skipCurrentValueCall: Boolean = false) : super(factory, skipCurrentValueCall)
 
-    constructor(inCollection: MutableCollection<X>): this() {
-        collection = DelayQueue<X>(inCollection)
-    }
+    constructor(inCollection: MutableCollection<X>, skipCurrentValueCall: Boolean = false): super({ DelayQueue<X>(inCollection) }, skipCurrentValueCall)
 
 }

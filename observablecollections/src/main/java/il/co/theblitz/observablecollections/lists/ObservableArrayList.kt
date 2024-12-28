@@ -10,10 +10,14 @@ import java.util.function.UnaryOperator
 import kotlin.collections.ArrayList
 
 @Suppress("unused")
-class ObservableArrayList<X>(skipCurrentValue: Boolean = false): ObservableList<X, ArrayList<X>>(skipCurrentValue), RandomAccess, Serializable {
-    init {
-        collection = ArrayList()
-    }
+class ObservableArrayList<X> : ObservableList<X, ArrayList<X>>, RandomAccess, Serializable {
+
+    constructor(factory: () -> ArrayList<X> = { ArrayList() }, skipCurrentValue: Boolean = false) : super(factory, skipCurrentValue)
+
+    constructor(capacity: Int, skipCurrentValue: Boolean = false) : this({ ArrayList(capacity) }, skipCurrentValue)
+
+    constructor(collection: Collection<X>, skipCurrentValue: Boolean = false) : this({ ArrayList(collection) }, skipCurrentValue)
+
 
     fun addAll(index: Int, elements: Collection<X>): Boolean {
         val added = collection!!.addAll(index, elements)

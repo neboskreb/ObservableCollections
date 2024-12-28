@@ -1,17 +1,17 @@
 package il.co.theblitz.observablecollections.lists
 
-import il.co.theblitz.observablecollections.abstracts.ObservableCollection
 import il.co.theblitz.observablecollections.abstracts.ObservableDeque
 import il.co.theblitz.observablecollections.enums.ObservableCollectionsAction
 import java.io.Serializable
-import java.util.*
+import java.util.LinkedList
 
 
-class ObservableLinkedList<X>(skipCurrentValueCall: Boolean = false): ObservableDeque<X, LinkedList<X>>(skipCurrentValueCall), Serializable{
+open class ObservableLinkedList<X> : ObservableDeque<X, LinkedList<X>>, Serializable{
 
-    init {
-        collection = LinkedList<X>()
-    }
+    constructor(factory: () -> LinkedList<X> = { LinkedList() }, skipCurrentValue: Boolean = false) : super(factory, skipCurrentValue)
+
+    constructor(collection: Collection<X>, skipCurrentValue: Boolean = false) : this({ LinkedList(collection) }, skipCurrentValue)
+
 
     fun add(index: Int, element: X) {
         signalChanged(ObservableCollectionsAction.Add, actionInt = index, actionElement = element)

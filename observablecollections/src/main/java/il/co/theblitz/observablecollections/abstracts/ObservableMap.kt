@@ -5,14 +5,19 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import il.co.theblitz.observablecollections.enums.ObservableCollectionsAction
-import java.util.function.Predicate
-import java.util.stream.Stream
 
- abstract class ObservableMap<X, Y, T : MutableMap<X, Y>>(val skipCurrentValueCall: Boolean = false): MutableLiveData<ObservableMap<X, Y, T>>(), Iterable<Map.Entry<X, Y>>{
+ abstract class ObservableMap<X, Y, T : MutableMap<X, Y>> : MutableLiveData<ObservableMap<X, Y, T>>, Iterable<Map.Entry<X, Y>>{
 
-    protected var map: T? = null
+     val skipCurrentValueCall: Boolean
 
-    var action: ObservableCollectionsAction? = null
+     protected val map: T
+
+     constructor(factory: () -> T, skipCurrentValueCall: Boolean = false) : super() {
+         this.skipCurrentValueCall = skipCurrentValueCall
+         this.map = factory.invoke()
+     }
+
+     var action: ObservableCollectionsAction? = null
         private set
 
     var actionKey: X? = null

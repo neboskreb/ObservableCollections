@@ -8,11 +8,15 @@ import java.io.Serializable
 import java.util.*
 import java.util.function.UnaryOperator
 
-class ObservableVector<X>(skipCurrentValueCall: Boolean = false): Serializable, ObservableList<X, Vector<X>>(skipCurrentValueCall){
+class ObservableVector<X> : Serializable, ObservableList<X, Vector<X>> {
+    constructor(factory: () -> Vector<X> = { Vector() }, skipCurrentValue: Boolean = false) : super(factory, skipCurrentValue)
 
-    init {
-        collection = Vector<X>()
-    }
+    constructor(capacity: Int, skipCurrentValue: Boolean = false) : this({ Vector(capacity) }, skipCurrentValue)
+
+    constructor(capacity: Int, capacityIncrement: Int, skipCurrentValue: Boolean = false) : this({ Vector(capacity, capacityIncrement) }, skipCurrentValue)
+
+    constructor(collection: Collection<X>, skipCurrentValue: Boolean = false) : this({ Vector(collection) }, skipCurrentValue)
+
 
     fun indexOf(o: Any?, index: Int): Int {
         return collection!!.indexOf(o, index)

@@ -4,7 +4,9 @@ import il.co.theblitz.observablecollections.enums.ObservableCollectionsAction
 import il.co.theblitz.observablecollections.queues.ObservableQueue
 import java.util.*
 
-abstract class ObservableDeque<X, T : Deque<X>>(skipCurrentValueCall: Boolean = false): ObservableQueue<X, T>(skipCurrentValueCall) {
+abstract class ObservableDeque<X, T : Deque<X>> : ObservableQueue<X, T> {
+
+    constructor(factory: () -> T, skipCurrentValueCall: Boolean = false) : super(factory, skipCurrentValueCall)
 
     fun peekLast(): X {
         return collection!!.peekLast()

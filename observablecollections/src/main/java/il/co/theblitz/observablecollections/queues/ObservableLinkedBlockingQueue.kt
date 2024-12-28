@@ -4,18 +4,12 @@ import il.co.theblitz.observablecollections.abstracts.ObservableBlockingQueue
 import java.io.Serializable
 import java.util.concurrent.LinkedBlockingQueue
 
-open class ObservableLinkedBlockingQueue<X>(skipCurrentValueCall: Boolean = false): ObservableBlockingQueue<X, LinkedBlockingQueue<X>>(skipCurrentValueCall), Serializable {
+open class ObservableLinkedBlockingQueue<X>: ObservableBlockingQueue<X, LinkedBlockingQueue<X>>, Serializable {
 
-    init {
-        collection = LinkedBlockingQueue<X>()
-    }
+    constructor(factory: () -> LinkedBlockingQueue<X> = { LinkedBlockingQueue() }, skipCurrentValueCall: Boolean = false): super(factory, skipCurrentValueCall)
 
-    constructor(inCollection: MutableCollection<X>): this() {
-        collection = LinkedBlockingQueue<X>(inCollection)
-    }
+    constructor(inCollection: MutableCollection<X>, skipCurrentValueCall: Boolean = false): super({ LinkedBlockingQueue<X>(inCollection) }, skipCurrentValueCall)
 
-    constructor(capacity: Int): this() {
-        collection = LinkedBlockingQueue<X>(capacity)
-    }
+    constructor(capacity: Int, skipCurrentValueCall: Boolean = false): super({ LinkedBlockingQueue<X>(capacity) }, skipCurrentValueCall)
 
 }

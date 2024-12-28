@@ -5,10 +5,12 @@ import java.io.Serializable
 import java.util.*
 import kotlin.collections.HashSet
 
-open class ObservableHashSet<X>(skipCurrentValueCall: Boolean = false): ObservableSet<X, HashSet<X>>(skipCurrentValueCall), Serializable {
+open class ObservableHashSet<X> : ObservableSet<X, HashSet<X>>, Serializable {
 
-    init {
-        collection = HashSet<X>()
-    }
+    constructor(factory: () -> HashSet<X> = { HashSet() }, skipCurrentValue: Boolean = false) : super(factory, skipCurrentValue)
+
+    constructor(capacity: Int, skipCurrentValue: Boolean = false) : this({ HashSet(capacity) }, skipCurrentValue)
+
+    constructor(collection: Collection<X>, skipCurrentValue: Boolean = false) : this({ HashSet(collection) }, skipCurrentValue)
 
 }
